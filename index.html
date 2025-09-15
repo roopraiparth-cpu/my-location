@@ -14,17 +14,8 @@
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
 
-          // only log to console:
+          // This shows up only in DevTools console:
           console.log("Visitor coords:", lat, lon);
-
-          // you could also send it to a server:
-          /*
-          fetch('https://your-server.com/log', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({lat, lon})
-          });
-          */
         },
         error => {
           console.log("Error getting location:", error);
