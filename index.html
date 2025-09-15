@@ -3,8 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <title>Simple Location Logger</title>
+  <style>
+    /* Fullscreen red warning overlay */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    #warning {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: darkred;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: -1; /* behind your text */
+    }
+
+    #warning img {
+      max-width: 80%;
+      max-height: 80%;
+    }
+
+    h1, p {
+      position: relative;
+      z-index: 1; /* above the red overlay */
+      color: white;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
+  <div id="warning">
+    <!-- You can put a warning image here -->
+    <img src="https://via.placeholder.com/300x300/FF0000/FFFFFF?text=WARNING" alt="Warning">
+  </div>
+
   <h1>Location Logger</h1>
   <p>Click allow to send your coordinates</p>
 
