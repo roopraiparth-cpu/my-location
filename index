@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Location Logger</title>
+</head>
+<body>
+  <h1>Location Logger</h1>
+  <p>Click allow to send your coordinates</p>
+
+  <script>
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          fetch("YOUR_PIPEDREAM_WEBHOOK_URL", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              timestamp: new Date().toISOString(),
+              lat: pos.coords.latitude,
+              lon: pos.coords.longitude
+            })
+          });
+          console.log("Coords sent!");
+        },
+        (err) => console.error("Geo error:", err)
+      );
+    } else {
+      console.log("Geolocation not supported");
+    }
+  </script>
+</body>
+</html>
