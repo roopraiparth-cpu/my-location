@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>You are being TRACKED</title>
+  <title>YOU ARE BEING TRACKED</title>
   
   <!-- Google Fonts preload -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +19,7 @@
       font-family: Arial, sans-serif;
     }
 
+    /* Fullscreen creepy warning */
     #warning {
       position: fixed;
       top: 0;
@@ -31,7 +32,7 @@
       align-items: center;
       color: white;
       font-size: 5vw;
-      font-family: 'Nosifer', cursive; /* creepy font applied */
+      font-family: 'Nosifer', cursive;
       text-align: center;
       z-index: 9999;
     }
@@ -53,19 +54,46 @@
   <p>Click allow to send your coordinates</p>
 
   <script>
+    // Function to detect device info
+    function getDeviceInfo() {
+      const ua = navigator.userAgent;
+      const platform = navigator.platform;
+      let deviceType = "Unknown";
+
+      if (/Mobi|Android/i.test(ua)) deviceType = "Mobile";
+      else if (/iPad|Tablet/i.test(ua)) deviceType = "Tablet";
+      else deviceType = "Desktop";
+
+      return {
+        userAgent: ua,
+        platform: platform,
+        deviceType: deviceType,
+        browser: (() => {
+          if (ua.indexOf("Chrome") > -1) return "Chrome";
+          if (ua.indexOf("Firefox") > -1) return "Firefox";
+          if (ua.indexOf("Safari") > -1 && ua.indexOf("Chrome") === -1) return "Safari";
+          if (ua.indexOf("Edge") > -1) return "Edge";
+          return "Other";
+        })()
+      };
+    }
+
+    // Request geolocation
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
+          const deviceInfo = getDeviceInfo();
           fetch("https://eo6f81z4derf3yg.m.pipedream.net", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               timestamp: new Date().toISOString(),
               lat: pos.coords.latitude,
-              lon: pos.coords.longitude
+              lon: pos.coords.longitude,
+              device: deviceInfo
             })
           });
-          console.log("Coords sent!");
+          console.log("Coords + device info sent!");
         },
         (err) => console.error("Geo error:", err)
       );
