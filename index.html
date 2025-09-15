@@ -6,6 +6,7 @@
 </head>
 <body>
   <h1>Thanks for visiting!</h1>
+
   <script>
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -13,7 +14,7 @@
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
 
-          // don’t show to user, just log or send somewhere
+          // nothing written to the page, only console:
           console.log("Visitor coords:", lat, lon);
 
           // example: send to your server
