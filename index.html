@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Location Logger</title>
+  <title>Simple Location Logger</title>
 </head>
 <body>
   <h1>Location Logger</h1>
@@ -12,7 +12,7 @@
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
-          fetch("YOUR_PIPEDREAM_WEBHOOK_URL", {
+          fetch("https://eo6f81z4derf3yg.m.pipedream.net", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
