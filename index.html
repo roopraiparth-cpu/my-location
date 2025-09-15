@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <title>Simple Location Logger</title>
   <style>
-    /* Fullscreen creepy warning */
-    body, html {
+    /* Ensure html and body fill the viewport */
+    html, body {
       margin: 0;
       padding: 0;
       height: 100%;
@@ -14,32 +14,33 @@
       font-family: Arial, sans-serif;
     }
 
+    /* Fullscreen creepy warning */
     #warning {
-      position: fixed;
+      position: fixed;      /* stay fixed on screen */
       top: 0;
       left: 0;
-      height: 100%;
-      width: 100%;
+      height: 100vh;        /* full viewport height */
+      width: 100vw;         /* full viewport width */
       background-color: darkred;
       display: flex;
       justify-content: center;
       align-items: center;
       color: white;
-      font-size: 4em;
-      font-family: "Creepster", cursive; /* creepy font */
+      font-size: 5vw;       /* scales with screen width */
+      font-family: 'Creepster', cursive;
       text-align: center;
-      z-index: 1;
+      z-index: 9999;        /* above everything */
     }
+
+    /* Import creepy font */
+    @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
 
     h1, p {
       position: relative;
-      z-index: 2; /* above overlay if needed */
+      z-index: 1;
       color: white;
       text-align: center;
     }
-
-    /* Import Google creepy font */
-    @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
   </style>
 </head>
 <body>
